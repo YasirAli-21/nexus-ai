@@ -1,0 +1,1190 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="NEXUS AI - Read-only interactive demonstration of AI-powered incident intelligence." />
+  <title>NEXUS AI | Interactive Recruiter Demo</title>
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #080e1a;
+      --sidebar: #0d1626;
+      --panel: #111d30;
+      --panel-alt: #0e192a;
+      --border: #263750;
+      --text: #eaf1ff;
+      --muted: #8fa3bd;
+      --blue: #60a5fa;
+      --cyan: #38bdf8;
+      --green: #34d399;
+      --yellow: #facc15;
+      --orange: #fb923c;
+      --red: #fb7185;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, sans-serif;
+      font-size: 14px;
+    }
+
+    button, input, select { font: inherit; }
+
+    button {
+      color: inherit;
+      cursor: pointer;
+    }
+
+    button:focus-visible, input:focus-visible, select:focus-visible {
+      outline: 2px solid var(--cyan);
+      outline-offset: 2px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 242px minmax(0, 1fr);
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      background: var(--sidebar);
+      border-right: 1px solid var(--border);
+      padding: 26px 19px;
+    }
+
+    .brand {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .logo {
+      width: 45px;
+      height: 45px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #2563eb, #06b6d4);
+      display: grid;
+      place-items: center;
+      font-size: 23px;
+      font-weight: 900;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .brand strong {
+      font-size: 19px;
+      letter-spacing: 1.2px;
+    }
+
+    .brand small {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .sidebar-label {
+      color: #69819f;
+      text-transform: uppercase;
+      font-size: 10px;
+      letter-spacing: 1.6px;
+      font-weight: 800;
+      margin: 42px 12px 15px;
+    }
+
+    .nav-item {
+      display: block;
+      padding: 13px;
+      margin-bottom: 7px;
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 10px;
+      color: #9fb3ce;
+      text-decoration: none;
+      font-weight: 650;
+      width: 100%;
+      text-align: left;
+    }
+
+    .nav-item.active {
+      background: #1b3558;
+      color: #b9e5ff;
+      border-color: #2e5783;
+    }
+
+    .nav-item:hover { background: #17283e; }
+
+    .sidebar-note {
+      margin-top: 45px;
+      border: 1px solid #275246;
+      border-radius: 12px;
+      background: #0e3028;
+      padding: 15px;
+      line-height: 1.7;
+      color: #a6e5c8;
+      font-size: 12px;
+    }
+
+    .sidebar-note strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    main {
+      min-width: 0;
+      padding: 26px 32px 48px;
+      max-width: 1580px;
+      width: 100%;
+      margin: auto;
+    }
+
+    .topbar,
+    .heading-row,
+    .panel-heading,
+    .detail-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .eyebrow {
+      font-size: 10px;
+      color: var(--cyan);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 850;
+    }
+
+    h1 {
+      font-size: clamp(25px, 3vw, 34px);
+      letter-spacing: -.8px;
+      margin: 10px 0 8px;
+    }
+
+    h2 { font-size: 18px; margin: 0; }
+
+    h3 { font-size: 14px; margin: 0 0 10px; }
+
+    p { color: var(--muted); line-height: 1.7; }
+
+    .intro { margin: 0 0 25px; }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border: 1px solid #225444;
+      color: #78e2bc;
+      background: #0d2924;
+      border-radius: 9px;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .demo-banner {
+      margin-top: 23px;
+      margin-bottom: 24px;
+      background: linear-gradient(90deg, #142f4e, #10233c);
+      border: 1px solid #275c90;
+      border-radius: 13px;
+      padding: 14px 18px;
+      color: #b9ddff;
+      line-height: 1.65;
+      font-size: 12px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 15px;
+      margin-bottom: 21px;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 21px;
+      min-width: 0;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 35px;
+      margin: 12px 0 5px;
+      font-weight: 800;
+    }
+
+    .stat small { color: #738ba9; }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 17px;
+      margin-bottom: 20px;
+    }
+
+    .panel-heading { margin-bottom: 23px; }
+
+    .panel-heading p {
+      margin: 6px 0 0;
+      font-size: 12px;
+    }
+
+    .severity-line {
+      display: grid;
+      grid-template-columns: 75px 1fr 22px;
+      align-items: center;
+      gap: 12px;
+      font-size: 11px;
+      margin: 20px 0;
+    }
+
+    .track {
+      background: #29384c;
+      height: 10px;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .fill {
+      height: 100%;
+      border-radius: 20px;
+      width: 0;
+    }
+
+    .status-visual {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+      min-height: 180px;
+    }
+
+    .donut {
+      flex-shrink: 0;
+      height: 160px;
+      width: 160px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: conic-gradient(#38bdf8 0 65%, #a78bfa 65% 100%);
+    }
+
+    .donut-center {
+      background: var(--panel);
+      height: 110px;
+      width: 110px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .donut-center strong { font-size: 31px; }
+    .donut-center small { color: var(--muted); font-size: 10px; }
+
+    .legend { flex: 1; }
+
+    .legend-line {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 12px;
+      margin-bottom: 13px;
+    }
+
+    .legend-line strong { margin-left: auto; }
+
+    .legend-dot {
+      height: 9px;
+      width: 9px;
+      border-radius: 3px;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 18px 0;
+    }
+
+    input, select {
+      background: #0b1423;
+      border: 1px solid #314662;
+      color: white;
+      padding: 12px 13px;
+      border-radius: 9px;
+    }
+
+    input { min-width: 210px; flex: 1; }
+    select { min-width: 160px; }
+
+    .table-scroll { overflow-x: auto; }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      min-width: 700px;
+      text-align: left;
+    }
+
+    th {
+      font-size: 10px;
+      color: #7890af;
+      letter-spacing: 1px;
+      padding: 14px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    td {
+      padding: 16px 12px;
+      border-bottom: 1px solid #233149;
+      font-size: 12px;
+      color: #c3d2e6;
+    }
+
+    tbody tr { cursor: pointer; }
+
+    tbody tr:hover { background: #1a2a42; }
+
+    tbody tr.selected { background: #1a3552; }
+
+    .incident-link {
+      color: #80d7ff;
+      font-weight: 750;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 7px;
+      border: 1px solid;
+      font-size: 10px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .CRITICAL { color: var(--red); border-color: #9b4154; }
+    .HIGH { color: var(--orange); border-color: #945634; }
+    .MEDIUM { color: var(--yellow); border-color: #856f27; }
+    .LOW { color: var(--green); border-color: #296d58; }
+    .OPEN { color: var(--blue); border-color: #376b9b; }
+    .NEW { color: #b6a0ff; border-color: #604d9d; }
+
+    .btn {
+      border: 1px solid #365477;
+      background: #1a314d;
+      padding: 10px 15px;
+      border-radius: 9px;
+      font-size: 12px;
+      font-weight: 750;
+    }
+
+    .btn:hover { background: #24466d; }
+
+    .btn.primary {
+      background: #2563eb;
+      border-color: #3b82f6;
+    }
+
+    .detail {
+      margin-top: 21px;
+      border-color: #315d8e;
+      scroll-margin-top: 22px;
+    }
+
+    .detail-heading { margin-bottom: 21px; }
+
+    .detail-heading h2 {
+      margin-top: 7px;
+      color: #9bdeff;
+      overflow-wrap: anywhere;
+    }
+
+    .detail-metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 11px;
+      margin-bottom: 20px;
+    }
+
+    .metric {
+      background: var(--panel-alt);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+    }
+
+    .metric small {
+      display: block;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .metric strong { overflow-wrap: anywhere; }
+
+    .investigation {
+      background: linear-gradient(135deg, #14263f, #101b2e);
+      border: 1px solid #325e93;
+      border-radius: 12px;
+      padding: 21px;
+      margin-bottom: 18px;
+    }
+
+    .info-box {
+      background: var(--panel-alt);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 17px;
+      margin-top: 14px;
+    }
+
+    .info-box p { margin-bottom: 0; }
+
+    .insight {
+      border-top: 1px solid #2b4059;
+      padding: 12px 0;
+      color: #c1d4e8;
+      line-height: 1.6;
+      font-size: 12px;
+    }
+
+    .insight:first-child { border-top: 0; }
+
+    .workflow {
+      background: #0d2724;
+      border: 1px solid #285e4e;
+      padding: 17px;
+      border-radius: 10px;
+      margin-top: 16px;
+    }
+
+    .workflow strong { color: #89e9c4; }
+
+    .workflow p { margin-bottom: 0; }
+
+    .section { margin-top: 22px; }
+
+    .footer {
+      text-align: center;
+      padding: 25px 0 0;
+      color: #7086a2;
+      font-size: 11px;
+    }
+
+    .footer a { color: #7dd3fc; }
+
+    .empty {
+      padding: 25px;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    [hidden] { display: none !important; }
+
+    @media (max-width: 1000px) {
+      .layout { grid-template-columns: 1fr; }
+
+      .sidebar {
+        padding: 15px 18px;
+        border-right: 0;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .sidebar-label, .sidebar-note { display: none; }
+
+      .nav {
+        display: flex;
+        gap: 8px;
+        margin-top: 13px;
+      }
+
+      .nav-item {
+        width: auto;
+        margin: 0;
+      }
+
+      .stats, .detail-metrics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 650px) {
+      main { padding: 21px 13px; }
+      .two-col { grid-template-columns: 1fr; }
+      .topbar, .heading-row, .detail-heading {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+      .panel { padding: 16px; }
+      .stats { gap: 9px; }
+      .stat strong { font-size: 28px; }
+      .status-visual { gap: 13px; }
+      .donut { height: 126px; width: 126px; }
+      .donut-center { height: 88px; width: 88px; }
+      .detail-metrics { gap: 9px; }
+      .nav-item { padding: 9px; font-size: 11px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">N</div>
+        <div>
+          <strong>NEXUS AI</strong>
+          <small>Incident Intelligence</small>
+        </div>
+      </div>
+
+      <div class="sidebar-label">Recruiter Demo</div>
+
+      <nav class="nav" aria-label="Main navigation">
+        <a class="nav-item active" href="#overview">◈ Overview</a>
+        <a class="nav-item" href="#incidents">▤ Incidents</a>
+        <a class="nav-item" href="#about">◎ About</a>
+      </nav>
+
+      <div class="sidebar-note">
+        <strong>✓ Safe Demo Mode</strong>
+        Synthetic records only.
+        No live infrastructure connected.
+        No administrative actions enabled.
+      </div>
+    </aside>
+
+    <main>
+      <div class="topbar">
+        <div class="eyebrow">AI Operations & Security Intelligence</div>
+        <div class="tag">● PUBLIC READ-ONLY DEMO</div>
+      </div>
+
+      <section id="overview" class="section">
+        <div class="heading-row">
+          <div>
+            <h1>Security Operations Overview</h1>
+            <p class="intro">
+              Explore how NEXUS AI detects operational anomalies,
+              investigates incidents, and supports human-controlled response.
+            </p>
+          </div>
+          <a class="btn" href="https://github.com/YasirAli-21/nexus-ai"
+             target="_blank" rel="noopener noreferrer">
+            View Source ↗
+          </a>
+        </div>
+
+        <div class="demo-banner">
+          <strong>Interactive Portfolio Demonstration</strong>
+          — The incidents, investigation findings, and metrics shown here are
+          illustrative synthetic examples. No backend requests are made.
+          This page demonstrates product workflows rather than live detection.
+        </div>
+
+        <div class="stats">
+          <article class="panel stat">
+            <span>Total Incidents</span>
+            <strong id="totalCount">0</strong>
+            <small>Illustrative dataset</small>
+          </article>
+
+          <article class="panel stat">
+            <span>Critical Alerts</span>
+            <strong id="criticalCount" style="color:var(--red)">0</strong>
+            <small>High priority</small>
+          </article>
+
+          <article class="panel stat">
+            <span>Active Cases</span>
+            <strong id="activeCount" style="color:var(--yellow)">0</strong>
+            <small>Awaiting resolution</small>
+          </article>
+
+          <article class="panel stat">
+            <span>ML-Detected</span>
+            <strong id="mlCount" style="color:var(--cyan)">0</strong>
+            <small>Sample anomaly alerts</small>
+          </article>
+        </div>
+
+        <div class="two-col">
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <h2>Severity Distribution</h2>
+                <p>Synthetic incident classifications</p>
+              </div>
+            </div>
+            <div id="severityChart"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading">
+              <div>
+                <h2>Incident Lifecycle</h2>
+                <p>Example operational states</p>
+              </div>
+            </div>
+            <div class="status-visual">
+              <div class="donut" id="statusDonut">
+                <div class="donut-center">
+                  <strong id="donutTotal">0</strong>
+                  <small>CASES</small>
+                </div>
+              </div>
+              <div class="legend" id="statusLegend"></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="incidents" class="panel section">
+        <div class="panel-heading">
+          <div>
+            <h2>Incident Intelligence Queue</h2>
+            <p>Select any incident to inspect its AI investigation and response workflow.</p>
+          </div>
+        </div>
+
+        <div class="toolbar">
+          <input id="searchInput" type="search"
+                 aria-label="Search incidents"
+                 placeholder="Search incident ID or service..." />
+
+          <select id="severityFilter" aria-label="Filter by severity">
+            <option value="ALL">All Severities</option>
+            <option value="CRITICAL">Critical</option>
+            <option value="HIGH">High</option>
+            <option value="MEDIUM">Medium</option>
+            <option value="LOW">Low</option>
+          </select>
+        </div>
+
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>INCIDENT ID</th>
+                <th>SERVICE</th>
+                <th>SEVERITY</th>
+                <th>DETECTION</th>
+                <th>STATUS</th>
+                <th>DETAILS</th>
+              </tr>
+            </thead>
+            <tbody id="incidentRows"></tbody>
+          </table>
+        </div>
+
+        <p id="resultCount" style="font-size:12px"></p>
+      </section>
+
+      <section id="incidentDetails" class="panel detail" hidden aria-live="polite">
+        <div class="detail-heading">
+          <div>
+            <span class="eyebrow">Incident Investigation</span>
+            <h2 id="detailId"></h2>
+          </div>
+          <button class="btn" id="closeDetails">Close Details ✕</button>
+        </div>
+
+        <div class="detail-metrics">
+          <div class="metric">
+            <small>Service</small>
+            <strong id="detailService"></strong>
+          </div>
+
+          <div class="metric">
+            <small>Severity</small>
+            <strong id="detailSeverity"></strong>
+          </div>
+
+          <div class="metric">
+            <small>Detection Method</small>
+            <strong id="detailMethod"></strong>
+          </div>
+
+          <div class="metric">
+            <small>Assessment Confidence</small>
+            <strong id="detailConfidence"></strong>
+          </div>
+        </div>
+
+        <div class="investigation">
+          <span class="eyebrow">AI-Assisted Investigation Preview</span>
+          <h2 style="margin:9px 0">Probable Root Cause</h2>
+          <p id="detailCause"></p>
+
+          <div class="two-col" style="margin-bottom:0">
+            <div class="info-box">
+              <h3>🔎 Investigation Findings</h3>
+              <div id="detailFindings"></div>
+            </div>
+
+            <div class="info-box">
+              <h3>✓ Suggested Response Actions</h3>
+              <div id="detailRecommendations"></div>
+            </div>
+          </div>
+
+          <div class="workflow">
+            <strong>Human-in-the-Loop Remediation</strong>
+            <p>
+              Investigation recommendations require human review.
+              The full NEXUS AI system records approve/reject decisions,
+              prevents unauthorized simulation, and maintains an audit trail.
+              This public demonstration does not execute those actions.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" class="panel section">
+        <span class="eyebrow">About The Platform</span>
+        <h2 style="margin-top:8px">How NEXUS AI Works</h2>
+
+        <div class="two-col" style="margin-top:20px;margin-bottom:0">
+          <div>
+            <h3>01 — Telemetry & Detection</h3>
+            <p>
+              Operational metrics are processed through an Isolation Forest
+              anomaly detector and critical threshold rules.
+              Observation confirmation and cooldown logic reduce
+              unnecessary duplicate incidents.
+            </p>
+
+            <h3>02 — Incident Intelligence</h3>
+            <p>
+              Detected anomalies become incident records containing
+              service information, severity, supporting evidence,
+              and an event timeline.
+            </p>
+          </div>
+
+          <div>
+            <h3>03 — AI Investigation</h3>
+            <p>
+              An investigation engine analyzes incident evidence,
+              proposes probable causes, and generates actionable
+              recommendations with an assessment confidence level.
+            </p>
+
+            <h3>04 — Controlled Remediation</h3>
+            <p>
+              Administrators review findings and approve or reject
+              remediation. The current system supports safe simulation,
+              rather than real infrastructure changes.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        NEXUS AI · Read-Only Portfolio Demonstration ·
+        <a href="https://github.com/YasirAli-21/nexus-ai"
+           target="_blank" rel="noopener noreferrer">
+          GitHub Source Code
+        </a>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    "use strict";
+
+    // Entirely fictional portfolio examples.
+    // No fetch(), backend endpoint, or authentication is used.
+
+    const incidents = [
+      {
+        id: "DEMO-1001",
+        service: "checkout-api",
+        severity: "CRITICAL",
+        status: "OPEN",
+        method: "HYBRID",
+        confidence: "HIGH",
+        cause: "Checkout requests are experiencing elevated latency and error rates. A downstream dependency or service saturation may be contributing.",
+        findings: [
+          "API latency exceeded the configured critical threshold.",
+          "Error rate increased during the sample observation period.",
+          "Elevated CPU usage suggests possible resource pressure."
+        ],
+        recommendations: [
+          "Inspect checkout application logs and recent deployments.",
+          "Review downstream database and payment gateway latency.",
+          "Validate service capacity before any remediation."
+        ]
+      },
+      {
+        id: "DEMO-1002",
+        service: "payment-service",
+        severity: "CRITICAL",
+        status: "NEW",
+        method: "THRESHOLD",
+        confidence: "HIGH",
+        cause: "High request failures suggest payment processing disruption. Further investigation is required to confirm the source.",
+        findings: [
+          "Elevated payment processing error rate.",
+          "Significant response-time degradation.",
+          "Potential upstream or downstream service instability."
+        ],
+        recommendations: [
+          "Review payment processor connectivity.",
+          "Inspect failed request patterns.",
+          "Escalate to the payment service owner."
+        ]
+      },
+      {
+        id: "DEMO-1003",
+        service: "user-authentication",
+        severity: "LOW",
+        status: "NEW",
+        method: "ML",
+        confidence: "LOW",
+        cause: "Request volume differs from the normal operational pattern. The signal may represent unusual activity or a legitimate traffic change.",
+        findings: [
+          "Isolation Forest identified an unusual metric combination.",
+          "Critical threshold rules were not triggered.",
+          "Anomaly confirmation observations were recorded."
+        ],
+        recommendations: [
+          "Compare request traffic with historical baseline.",
+          "Check for planned load tests or marketing campaigns.",
+          "Continue monitoring before escalation."
+        ]
+      },
+      {
+        id: "DEMO-1004",
+        service: "inventory-api",
+        severity: "LOW",
+        status: "NEW",
+        method: "ML",
+        confidence: "LOW",
+        cause: "A small deviation from the learned normal telemetry pattern has been detected.",
+        findings: [
+          "Unusual combination of latency and request count.",
+          "No immediate critical service threshold violation."
+        ],
+        recommendations: [
+          "Inspect recent inventory synchronization tasks.",
+          "Observe whether the deviation continues."
+        ]
+      },
+      {
+        id: "DEMO-1005",
+        service: "database-cluster",
+        severity: "CRITICAL",
+        status: "OPEN",
+        method: "THRESHOLD",
+        confidence: "MEDIUM",
+        cause: "Sustained high resource utilization may be affecting database performance.",
+        findings: [
+          "Memory utilization exceeded the safety threshold.",
+          "Database-related latency increased.",
+          "Potential resource saturation."
+        ],
+        recommendations: [
+          "Review slow queries and database connection usage.",
+          "Inspect memory pressure and query execution plans.",
+          "Request administrator approval before any remediation."
+        ]
+      },
+      {
+        id: "DEMO-1006",
+        service: "api-gateway",
+        severity: "LOW",
+        status: "NEW",
+        method: "ML",
+        confidence: "LOW",
+        cause: "Traffic characteristics appear unusual relative to the learned baseline.",
+        findings: [
+          "Unusual request-count and latency relationship.",
+          "No confirmed service outage."
+        ],
+        recommendations: [
+          "Review gateway traffic distribution.",
+          "Investigate repeated unusual requests if they persist."
+        ]
+      },
+      {
+        id: "DEMO-1007",
+        service: "notification-service",
+        severity: "CRITICAL",
+        status: "NEW",
+        method: "THRESHOLD",
+        confidence: "MEDIUM",
+        cause: "High error rates may indicate a messaging integration or delivery queue issue.",
+        findings: [
+          "Critical notification delivery error rate.",
+          "Possible external provider or queue backlog."
+        ],
+        recommendations: [
+          "Inspect message queue depth.",
+          "Verify external notification provider health.",
+          "Review failed delivery logs."
+        ]
+      },
+      {
+        id: "DEMO-1008",
+        service: "orders-service",
+        severity: "CRITICAL",
+        status: "NEW",
+        method: "HYBRID",
+        confidence: "MEDIUM",
+        cause: "The orders service shows both anomalous metric behavior and critical latency conditions.",
+        findings: [
+          "Isolation Forest detected abnormal operating conditions.",
+          "Latency crossed a critical threshold.",
+          "Additional investigation is necessary to identify causality."
+        ],
+        recommendations: [
+          "Inspect database query delays.",
+          "Compare metrics with recent deployment changes.",
+          "Review application traces and downstream dependencies."
+        ]
+      }
+    ];
+
+    const $ = (id) => document.getElementById(id);
+
+    const colors = {
+      CRITICAL: "#fb7185",
+      HIGH: "#fb923c",
+      MEDIUM: "#facc15",
+      LOW: "#34d399"
+    };
+
+    function makeElement(tag, text, className) {
+      const element = document.createElement(tag);
+      element.textContent = text;
+
+      if (className) element.className = className;
+
+      return element;
+    }
+
+    function renderStats() {
+      $("totalCount").textContent = incidents.length;
+
+      $("criticalCount").textContent = incidents.filter(
+        item => item.severity === "CRITICAL"
+      ).length;
+
+      $("activeCount").textContent = incidents.filter(
+        item => item.status !== "RESOLVED"
+      ).length;
+
+      $("mlCount").textContent = incidents.filter(
+        item => item.method === "ML" || item.method === "HYBRID"
+      ).length;
+    }
+
+    function renderSeverity() {
+      const chart = $("severityChart");
+      chart.replaceChildren();
+
+      ["CRITICAL", "HIGH", "MEDIUM", "LOW"].forEach(severity => {
+        const count = incidents.filter(
+          item => item.severity === severity
+        ).length;
+
+        const line = makeElement("div", "", "severity-line");
+
+        const label = makeElement("span", severity);
+
+        const track = makeElement("div", "", "track");
+        const fill = makeElement("div", "", "fill");
+
+        fill.style.background = colors[severity];
+        fill.style.width = (count / incidents.length * 100) + "%";
+
+        track.appendChild(fill);
+
+        const value = makeElement("strong", String(count));
+
+        line.append(label, track, value);
+        chart.appendChild(line);
+      });
+    }
+
+    function renderStatus() {
+      const legend = $("statusLegend");
+      legend.replaceChildren();
+
+      const statusColors = {
+        NEW: "#38bdf8",
+        OPEN: "#a78bfa"
+      };
+
+      const grouped = Object.entries(statusColors).map(([status, color]) => ({
+        status,
+        color,
+        count: incidents.filter(item => item.status === status).length
+      }));
+
+      let start = 0;
+
+      const gradient = grouped.map(item => {
+        const end = start + item.count / incidents.length * 100;
+        const stop = `${item.color} ${start}% ${end}%`;
+        start = end;
+        return stop;
+      });
+
+      $("statusDonut").style.background =
+        `conic-gradient(${gradient.join(",")})`;
+
+      $("donutTotal").textContent = incidents.length;
+
+      grouped.forEach(item => {
+        const line = makeElement("div", "", "legend-line");
+        const dot = makeElement("span", "", "legend-dot");
+
+        dot.style.background = item.color;
+
+        line.append(
+          dot,
+          makeElement("span", item.status),
+          makeElement("strong", String(item.count))
+        );
+
+        legend.appendChild(line);
+      });
+    }
+
+    function renderTable() {
+      const search = $("searchInput").value.trim().toLowerCase();
+      const severity = $("severityFilter").value;
+      const body = $("incidentRows");
+
+      body.replaceChildren();
+
+      const filtered = incidents.filter(item => {
+        const matchesSearch =
+          item.id.toLowerCase().includes(search) ||
+          item.service.toLowerCase().includes(search) ||
+          item.method.toLowerCase().includes(search);
+
+        const matchesSeverity =
+          severity === "ALL" || item.severity === severity;
+
+        return matchesSearch && matchesSeverity;
+      });
+
+      filtered.forEach(item => {
+        const row = document.createElement("tr");
+
+        const cells = [
+          item.id,
+          item.service,
+          item.severity,
+          item.method,
+          item.status
+        ];
+
+        cells.forEach((value, index) => {
+          const cell = document.createElement("td");
+
+          if (index === 0) {
+            cell.appendChild(makeElement("span", value, "incident-link"));
+          } else if (index === 2 || index === 4) {
+            cell.appendChild(makeElement("span", value, `pill ${value}`));
+          } else {
+            cell.textContent = value;
+          }
+
+          row.appendChild(cell);
+        });
+
+        const actionCell = document.createElement("td");
+
+        const button = makeElement("button", "Inspect →", "btn");
+        button.type = "button";
+        button.setAttribute("aria-label", `Inspect incident ${item.id}`);
+        button.addEventListener("click", () => openIncident(item.id));
+
+        actionCell.appendChild(button);
+        row.appendChild(actionCell);
+
+        body.appendChild(row);
+      });
+
+      if (!filtered.length) {
+        const row = document.createElement("tr");
+        const cell = makeElement("td", "No matching demo incidents.", "empty");
+
+        cell.colSpan = 6;
+        row.appendChild(cell);
+        body.appendChild(row);
+      }
+
+      $("resultCount").textContent =
+        `Showing ${filtered.length} of ${incidents.length} synthetic incidents`;
+    }
+
+    function renderInsights(containerId, items) {
+      const container = $(containerId);
+      container.replaceChildren();
+
+      items.forEach(item => {
+        container.appendChild(makeElement("div", item, "insight"));
+      });
+    }
+
+    function openIncident(id) {
+      const item = incidents.find(incident => incident.id === id);
+
+      if (!item) return;
+
+      $("detailId").textContent = item.id;
+      $("detailService").textContent = item.service;
+      $("detailSeverity").textContent = item.severity;
+      $("detailMethod").textContent = item.method;
+      $("detailConfidence").textContent = item.confidence;
+      $("detailCause").textContent = item.cause;
+
+      renderInsights("detailFindings", item.findings);
+      renderInsights("detailRecommendations", item.recommendations);
+
+      $("incidentDetails").hidden = false;
+      $("incidentDetails").scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }
+
+    $("searchInput").addEventListener("input", renderTable);
+    $("severityFilter").addEventListener("change", renderTable);
+
+    $("closeDetails").addEventListener("click", () => {
+      $("incidentDetails").hidden = true;
+      $("incidents").scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    });
+
+    renderStats();
+    renderSeverity();
+    renderStatus();
+    renderTable();
+  </script>
+</body>
+</html>
