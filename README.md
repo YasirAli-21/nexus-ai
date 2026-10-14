@@ -83,7 +83,7 @@ Rather than automatically changing infrastructure, the system keeps remediation 
 ## 🏗️ System Architecture
 
 
----flowchart TD
+flowchart TD
     A[Operational Telemetry] --> B[FastAPI Ingestion]
     B --> C[Hybrid Detection Engine]
     C --> D[Isolation Forest]
@@ -98,6 +98,7 @@ Rather than automatically changing infrastructure, the system keeps remediation 
     J --> K
     K --> L[Human Approval]
     L --> M[Safe Remediation Simulation]
+    
 ---
 
 ## 🧰 Technology Stack
