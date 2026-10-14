@@ -3,6 +3,18 @@
 
 **An intelligent, human-controlled platform for anomaly detection, incident investigation, and safe remediation workflows.**
 
+
+### 🌐 Live Interactive Demo
+
+**[🚀 Explore NEXUS AI Live](https://nexus-ai-4ng.pages.dev/)**
+
+Experience the public read-only dashboard, synthetic incident monitoring, anomaly intelligence, and AI investigation previews.
+
+> **Demo Notice:** This is an interactive portfolio demonstration using synthetic data. The production-style FastAPI backend, administrator workflows, and live telemetry ingestion are not exposed publicly.
+
+[![CI](https://github.com/YasirAli-21/nexus-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/YasirAli-21/nexus-ai/actions/workflows/ci.yml)
+
+
 NEXUS AI combines machine learning, live telemetry monitoring, evidence-based incident analysis, and a security operations dashboard to support operational decision-making.
 
 Rather than automatically changing infrastructure, the system keeps remediation under human control through an approval and simulation workflow.
