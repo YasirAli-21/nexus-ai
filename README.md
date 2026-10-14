@@ -314,3 +314,36 @@ GitHub: [YasirAli-21](https://github.com/YasirAli-21)
 NEXUS AI currently includes operational anomaly detection, persistent incident intelligence, AI-assisted investigations, human-controlled remediation simulation, administrator authentication, automated testing, and a GitHub Actions CI pipeline.
 
 The system remains a development and demonstration platform, not a production-ready autonomous remediation system.
+## 📸 Platform Screenshots
+
+### Security Operations Dashboard
+![NEXUS AI Dashboard](docs/screenshots/dashboard.png)
+
+### AI Investigation Center
+![AI Investigation](docs/screenshots/ai-investigation.png)
+
+### Human-Controlled Remediation
+![Remediation Workflow](docs/screenshots/remediation.png)
+
+### Administrator Login
+![NEXUS AI Login](docs/screenshots/login.png)
+
+---
+
+
+## 📸 Platform Screenshots
+
+### Security Operations Dashboard
+![NEXUS AI Dashboard](docs/screenshots/dashboard.png)
+
+### AI Investigation Center
+![AI Investigation](docs/screenshots/ai-investigation.png)
+
+### Human-Controlled Remediation
+![Remediation Workflow](docs/screenshots/remediation.png)
+
+### Administrator Login
+![NEXUS AI Login](docs/screenshots/login.png)
+
+---
+
