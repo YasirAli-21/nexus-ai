@@ -82,27 +82,22 @@ Rather than automatically changing infrastructure, the system keeps remediation 
 
 ## 🏗️ System Architecture
 
-```mermaid
-flowchart TD
-    A["Operational Telemetry"] --> B["FastAPI Telemetry Ingestion"]
-    B --> C["Hybrid Detection Engine"]
-    C --> D["Isolation Forest"]
-    C --> E["Rule-Based Thresholds"]
-    D --> F["Confirmation & Cooldown Logic"]
+
+---flowchart TD
+    A[Operational Telemetry] --> B[FastAPI Ingestion]
+    B --> C[Hybrid Detection Engine]
+    C --> D[Isolation Forest]
+    C --> E[Threshold Rules]
+    D --> F[Anomaly Confirmation]
     E --> F
-    F --> G["Incident Management"]
-    G --> H[("SQLite Database")]
-    H --> I["AI Investigation Engine"]
-    I --> J["Findings & Recommendations"]
-    H --> K["React SOC Dashboard"]
+    F --> G[Incident Management]
+    G --> H[SQLite Database]
+    H --> I[AI Investigation]
+    I --> J[Root Cause and Recommendations]
+    H --> K[React Dashboard]
     J --> K
-    K --> L["Human Approval / Rejection"]
-    L --> M["Safe Remediation Simulation"]
-    M --> H
-```
-
-The platform separates detection, investigation, and remediation decisions. This design allows operational anomalies to be investigated without immediately executing potentially disruptive actions.
-
+    K --> L[Human Approval]
+    L --> M[Safe Remediation Simulation]
 ---
 
 ## 🧰 Technology Stack
