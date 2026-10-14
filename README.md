@@ -1,104 +1,197 @@
+
 # 🛡️ NEXUS AI
+
 ### AI-Powered Operations & Incident Intelligence Platform
 
 **An intelligent, human-controlled platform for anomaly detection, incident investigation, and safe remediation workflows.**
 
-
-### 🌐 Live Interactive Demo
-
-**[🚀 Explore NEXUS AI Live](https://nexus-ai-4ng.pages.dev/)**
-
-Experience the public read-only dashboard, synthetic incident monitoring, anomaly intelligence, and AI investigation previews.
-
-> **Demo Notice:** This is an interactive portfolio demonstration using synthetic data. The production-style FastAPI backend, administrator workflows, and live telemetry ingestion are not exposed publicly.
-
 [![CI](https://github.com/YasirAli-21/nexus-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/YasirAli-21/nexus-ai/actions/workflows/ci.yml)
 
+## 🌐 Live Interactive Demo
+
+### [🚀 Explore NEXUS AI Live](https://nexus-ai-4ng.pages.dev/)
+
+Explore the interactive dashboard, synthetic incidents, severity analytics, and AI investigation previews.
+
+> **Demo Notice:** The public demo uses synthetic data and is read-only. The actual FastAPI backend, administrator workflows, and telemetry ingestion are not exposed publicly.
 
 NEXUS AI combines machine learning, live telemetry monitoring, evidence-based incident analysis, and a security operations dashboard to support operational decision-making.
 
-Rather than automatically changing infrastructure, the system keeps remediation under human control through an approval and simulation workflow.
+Instead of automatically modifying infrastructure, NEXUS AI keeps remediation decisions under human control.
 
 ---
 
 ## 🚀 Key Features
 
 ### 1. AI-Powered Anomaly Detection
+
 - Isolation Forest-based anomaly detection
-- Threshold-based detection of critical operational conditions
-- Hybrid ML and rule-based detection approach
-- Multiple-observation confirmation for ML-only anomalies
-- Duplicate incident suppression through cooldown logic
+- Rule-based critical thresholds
+- Hybrid ML and threshold detection
+- Three-observation confirmation for ML-only anomalies
+- Duplicate suppression using cooldown logic
+- Automatic incident generation
 
 ### 2. Live Telemetry Monitoring
-- REST API for ingesting operational metrics
-- Monitoring of CPU usage, memory utilization, latency, request count, and error rate
+
+- FastAPI telemetry ingestion endpoints
+- CPU and memory monitoring
+- API response latency monitoring
+- Request count and error rate monitoring
 - Persistent telemetry history using SQLite
-- Automatic incident generation when detection criteria are met
+- Incident generation based on detection criteria
 
 ### 3. Incident Intelligence
-- Centralized incident records
-- Severity classification
-- Evidence collection and correlation
-- Incident timeline tracking
-- Root cause and confidence fields
+
+- Centralized incident management
+- Severity classifications
+- Evidence collection
+- Incident timelines
+- Root cause assessments
+- Investigation confidence levels
 
 ### 4. AI Investigation Engine
-- On-demand investigation of recorded incidents
-- Evidence-based root cause assessment
-- Key findings and response recommendations
-- Persistent investigation reports
-- Deterministic investigation mode without LLM API costs
-- Optional LLM investigation support when configured
 
-**AI-generated conclusions are advisory and do not automatically trigger remediation.**
+- On-demand incident investigation
+- Evidence-based root cause assessment
+- Key findings generation
+- Recommended response actions
+- Saved investigation reports
+- Deterministic investigation mode without API costs
+- Optional LLM investigation support
+
+> AI-generated findings are advisory and do not automatically execute remediation.
 
 ### 5. Human-in-the-Loop Remediation
-- Administrator-controlled approval and rejection
-- Remediation simulation after approval
-- Prevention of repeated approval or simulation actions
-- Persistent audit trail for workflow decisions
-- No real infrastructure modifications during simulation
+
+- Human approval and rejection
+- Safe remediation simulation
+- Prevention of repeated approval decisions
+- Prevention of repeated simulations
+- Persistent workflow audit trail
+- No real production infrastructure modifications
 
 ### 6. Security Operations Dashboard
-- React-based dark SOC-style interface
-- Severity distribution visualization
-- Incident queue with search and filters
-- Recent incident activity
-- Incident details, evidence, and timelines
+
+- Professional React dashboard
+- Dark security operations interface
+- Incident severity analytics
+- Incident queue with search and filtering
+- Evidence correlation
+- Incident timeline visualization
 - AI Investigation Center
-- Human approval and remediation controls
-- Automatic dashboard refresh
+- Human Approval Center
+- Automatic 15-second incident refresh
 
 ### 7. Authentication & Security
+
 - Administrator login and logout
 - Signed HttpOnly session cookies
-- Protected incident and telemetry APIs
-- Request-origin validation for state-changing operations
-- Temporary login lockout after repeated failed attempts
+- Protected incident APIs
+- Protected telemetry endpoints
+- Origin validation for state-changing requests
+- Temporary lockout after repeated incorrect passwords
 - Automated authentication security tests
 
 ---
 
 ## 🏗️ System Architecture
 
+NEXUS AI follows a modular architecture that separates anomaly detection, incident management, AI investigation, and human-controlled remediation.
 
-flowchart TD
-    A[Operational Telemetry] --> B[FastAPI Ingestion]
-    B --> C[Hybrid Detection Engine]
-    C --> D[Isolation Forest]
-    C --> E[Threshold Rules]
-    D --> F[Anomaly Confirmation]
-    E --> F
-    F --> G[Incident Management]
-    G --> H[SQLite Database]
-    H --> I[AI Investigation]
-    I --> J[Root Cause and Recommendations]
-    H --> K[React Dashboard]
-    J --> K
-    K --> L[Human Approval]
-    L --> M[Safe Remediation Simulation]
-    
+```text
+                    NEXUS AI SYSTEM ARCHITECTURE
+
+                  +---------------------------+
+                  |   Operational Telemetry   |
+                  | CPU, Memory, Latency,     |
+                  | Requests, Error Rate      |
+                  +-------------+-------------+
+                                |
+                                v
+                  +---------------------------+
+                  |   FastAPI Ingestion API   |
+                  +-------------+-------------+
+                                |
+                                v
+                  +---------------------------+
+                  |  Hybrid Detection Engine  |
+                  +-------------+-------------+
+                                |
+                   +------------+------------+
+                   |                         |
+                   v                         v
+          +------------------+     +------------------+
+          | Isolation Forest |     | Threshold Rules  |
+          | ML Anomaly Model |     | Critical Metrics |
+          +--------+---------+     +--------+---------+
+                   |                        |
+                   +------------+-----------+
+                                |
+                                v
+                  +---------------------------+
+                  | Confirmation & Cooldown   |
+                  | Duplicate Suppression     |
+                  +-------------+-------------+
+                                |
+                                v
+                  +---------------------------+
+                  |    Incident Management    |
+                  | Evidence + Event Timeline |
+                  +-------------+-------------+
+                                |
+                                v
+                  +---------------------------+
+                  |      SQLite Database      |
+                  +-------------+-------------+
+                                |
+                  +-------------+-------------+
+                  |                           |
+                  v                           v
+       +-----------------------+  +-----------------------+
+       | AI Investigation      |  | React SOC Dashboard   |
+       | Root Cause Analysis   |  | Incident Monitoring   |
+       | Findings & Actions    |  | Evidence & Timeline   |
+       +-----------+-----------+  +-----------+-----------+
+                   |                          |
+                   +-------------+------------+
+                                 |
+                                 v
+                   +--------------------------+
+                   | Human Approval / Reject  |
+                   +------------+-------------+
+                                |
+                                v
+                   +--------------------------+
+                   | Safe Remediation         |
+                   | Simulation Only          |
+                   +------------+-------------+
+                                |
+                                v
+                   +--------------------------+
+                   | Workflow Audit Trail     |
+                   | Persisted in SQLite      |
+                   +--------------------------+
+```
+
+### Architecture Explanation
+
+**1. Telemetry Ingestion:** Operational metrics are submitted through the FastAPI REST interface.
+
+**2. Hybrid Detection:** Isolation Forest detects unusual patterns while threshold rules identify critical conditions.
+
+**3. Confirmation & Cooldown:** ML-only anomalies require repeated observations before incident creation. Cooldown logic suppresses duplicate incidents.
+
+**4. Incident Management:** Confirmed anomalies produce persistent incident records, evidence, and event timelines.
+
+**5. AI Investigation:** The investigation engine reviews stored evidence and produces probable root causes, findings, and recommendations.
+
+**6. React Dashboard:** Administrators inspect incidents, investigation results, workflow status, and audit trails.
+
+**7. Human Approval:** Remediation actions require administrator review and approval.
+
+**8. Safe Simulation:** Approved incidents can undergo a simulated remediation workflow. No production infrastructure is modified.
+
 ---
 
 ## 🧰 Technology Stack
@@ -110,10 +203,11 @@ flowchart TD
 | Machine Learning | scikit-learn, Isolation Forest |
 | Data Processing | Pandas, NumPy |
 | Database | SQLite, SQLAlchemy |
-| AI Investigation | Deterministic investigator, optional LLM integration |
+| AI Investigation | Deterministic investigator, optional LLM |
 | Authentication | Session middleware, HttpOnly cookies |
 | Testing | Python unittest, FastAPI TestClient |
-| CI | GitHub Actions |
+| CI/CD | GitHub Actions |
+| Public Demo | HTML, CSS, JavaScript, Cloudflare Pages |
 | Version Control | Git, GitHub |
 
 ---
@@ -122,33 +216,65 @@ flowchart TD
 
 ```text
 nexus-ai/
-├── .github/
-│   └── workflows/
-│       └── ci.yml
-├── ai/
-├── backend/
-│   └── app/
-│       ├── api/
-│       ├── core/
-│       ├── models/
-│       └── services/
-├── config/
-├── data/
-│   └── synthetic/
-├── frontend/
-│   └── src/
-├── ml/
-├── scripts/
-├── tests/
-│   ├── test_api_integration.py
-│   ├── test_api_smoke.py
-│   └── test_auth_security.py
-├── requirements.txt
-├── .gitignore
-└── README.md
+|
++-- .github/
+|   +-- workflows/
+|       +-- ci.yml
+|
++-- ai/
++-- backend/
+|   +-- app/
+|       +-- api/
+|       +-- core/
+|       +-- models/
+|       +-- services/
+|
++-- config/
++-- data/
+|   +-- synthetic/
+|
++-- demo/
+|   +-- index.html
+|
++-- docs/
+|   +-- screenshots/
+|
++-- frontend/
+|   +-- src/
+|
++-- ml/
++-- scripts/
++-- tests/
+|   +-- test_api_integration.py
+|   +-- test_api_smoke.py
+|   +-- test_auth_security.py
+|
++-- requirements.txt
++-- .gitignore
++-- README.md
 ```
 
-Generated database files, credentials, virtual environments, and local backups are excluded from version control.
+Sensitive credentials, local databases, virtual environments, and backups are excluded from version control.
+
+---
+
+## 📸 Platform Screenshots
+
+### Security Operations Dashboard
+
+![NEXUS AI Dashboard](docs/screenshots/dashboard.png)
+
+### AI Investigation Center
+
+![AI Investigation](docs/screenshots/ai-investigation.png)
+
+### Human-Controlled Remediation
+
+![Remediation Workflow](docs/screenshots/remediation.png)
+
+### Administrator Login
+
+![NEXUS AI Login](docs/screenshots/login.png)
 
 ---
 
@@ -160,14 +286,14 @@ Generated database files, credentials, virtual environments, and local backups a
 - Node.js and npm
 - Git
 
-### 1. Clone the repository
+### 1. Clone Repository
 
 ```bash
 git clone https://github.com/YasirAli-21/nexus-ai.git
 cd nexus-ai
 ```
 
-### 2. Create a Python virtual environment
+### 2. Create Virtual Environment
 
 **Windows PowerShell:**
 
@@ -176,30 +302,30 @@ python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 ```
 
-### 3. Install backend dependencies
+### 3. Install Python Dependencies
 
 ```bash
 python -m pip install -r requirements.txt
 ```
 
-### 4. Configure authentication
+### 4. Configure Authentication
 
-Create a `.env` file in the repository root containing:
+Create a `.env` file in the project root:
 
 ```dotenv
 NEXUS_AUTH_ENABLED=true
-NEXUS_ADMIN_PASSWORD=REPLACE_WITH_A_LONG_RANDOM_PASSWORD
+NEXUS_ADMIN_PASSWORD=REPLACE_WITH_A_STRONG_RANDOM_PASSWORD
 NEXUS_SESSION_SECRET=REPLACE_WITH_A_LONG_RANDOM_SECRET
 NEXUS_COOKIE_SECURE=false
 ```
 
-The administrator password must be at least 12 characters, and the session secret must be at least 32 characters.
+The administrator password must contain at least 12 characters. The session secret must contain at least 32 characters.
 
-`NEXUS_COOKIE_SECURE=false` is intended only for local HTTP development. HTTPS deployments must use secure cookies.
+`NEXUS_COOKIE_SECURE=false` is intended only for local HTTP development. Secure HTTPS environments require appropriate secure-cookie configuration.
 
-Never commit `.env` or share actual passwords and API keys.
+**Never commit `.env`, passwords, or API keys.**
 
-### 5. Start the FastAPI backend
+### 5. Start FastAPI Backend
 
 From the project root:
 
@@ -209,11 +335,11 @@ python -m uvicorn backend.app.main:app --host 127.0.0.1 --port 8001
 
 Backend health endpoint:
 
-`http://127.0.0.1:8001/health`
+http://127.0.0.1:8001/health
 
-### 6. Start the React frontend
+### 6. Start React Dashboard
 
-Open another terminal:
+Open a separate terminal:
 
 ```bash
 cd frontend
@@ -221,87 +347,132 @@ npm ci
 npm run dev
 ```
 
-Open:
+Open the admin dashboard:
 
-**http://127.0.0.1:5173**
+http://127.0.0.1:5173
 
 Sign in using the administrator password configured in `.env`.
 
 ---
 
-## 🔍 Example Workflow
+## 🔍 End-to-End Workflow
 
-1. Telemetry is submitted to the FastAPI ingestion endpoint.
-2. The detection engine evaluates operational metrics using ML and threshold rules.
-3. Anomalies meeting the configured detection criteria produce incident records.
-4. Incident evidence and timeline events are stored.
-5. An administrator opens the incident in the React dashboard.
-6. The administrator runs an AI investigation and reviews findings.
-7. The administrator approves or rejects the remediation proposal.
-8. Approved cases may undergo a safe simulation.
-9. Workflow decisions and results remain available in the audit trail.
+1. Operational telemetry is submitted through FastAPI.
+2. Isolation Forest evaluates metrics against learned normal patterns.
+3. Rule-based thresholds check for critical conditions.
+4. Confirmation and cooldown logic determine whether an incident should be generated.
+5. The incident and its supporting evidence are saved in SQLite.
+6. An administrator opens the incident in the React dashboard.
+7. The AI investigation engine generates findings and recommendations.
+8. An administrator approves or rejects the remediation proposal.
+9. Approved cases may undergo safe remediation simulation.
+10. Audit events and workflow results are preserved.
 
-**The current remediation workflow is simulation-only. It does not execute production infrastructure changes.**
+### Example: E-Commerce Checkout Failure
+
+Imagine an online shopping platform where checkout latency suddenly increases.
+
+NEXUS AI monitors latency, error rate, CPU, memory, and request volume.
+
+If critical thresholds are crossed, it records an incident.
+
+The investigation engine analyzes evidence and suggests possible causes, such as service saturation or downstream dependency delays.
+
+An administrator reviews these findings and decides whether to approve a safe remediation simulation.
+
+**The current system does not automatically repair production infrastructure.**
 
 ---
 
-## 🧪 Testing
+## 🧪 Automated Testing
 
-The project includes automated integration and authentication tests.
-
-Run backend integration tests:
+### Backend Integration Tests
 
 ```bash
 python -m unittest discover -s tests -p "test_api_integration.py" -v
 ```
 
-Run authentication security tests:
+### Authentication Security Tests
 
 ```bash
 python -m unittest discover -s tests -p "test_auth_security.py" -v
 ```
 
-Build the React frontend:
+### React Production Build
 
 ```bash
 cd frontend
 npm run build
 ```
 
-The repository's GitHub Actions workflow runs these checks on pushes and pull requests targeting `main`.
+The GitHub Actions CI workflow automatically executes integration tests, security tests, and the frontend production build on pushes and pull requests targeting `main`.
 
-The smoke-test suite is designed to validate a running application and is not included in the current CI pipeline.
+The smoke-test suite requires a running backend and is not included in the current CI workflow.
 
 ---
 
 ## 🔐 Security Considerations
 
-NEXUS AI currently provides security controls suitable for local development and portfolio demonstration.
+NEXUS AI includes several development-stage security protections, but the admin application is not production-hardened.
 
-Additional work is required before public or production deployment:
+Before public production deployment, additional improvements are necessary:
 
-- HTTPS and secure cookie configuration
-- Persistent, centralized login rate limiting
-- Stronger session management and revocation
-- Production authentication and access-control design
-- Secret management and security monitoring
-- Deployment-specific origin and proxy configuration
-- Additional security and load testing
+- HTTPS and secure-cookie configuration
+- Centralized, persistent login rate limiting
+- Stronger session revocation mechanisms
+- Production authentication and authorization
+- Secret management
+- Proxy and origin configuration
+- Security monitoring and load testing
 
-The present login limiter is process-local, and the remediation engine is intentionally restricted to simulation.
+The current login limiter is process-local.
+
+The remediation engine intentionally supports simulation only.
+
+### Public Demo Safety
+
+The publicly deployed recruiter demo is separate from the authenticated backend.
+
+It uses hardcoded, illustrative synthetic incident examples and does not connect to private administrator APIs or the live SQLite database.
+
+---
+
+## 🌍 Public Deployment
+
+**Platform:** Cloudflare Pages
+
+**Live URL:**
+
+https://nexus-ai-4ng.pages.dev/
+
+The deployed application is a standalone interactive portfolio demonstration.
+
+It supports:
+
+- Synthetic incident monitoring
+- Severity analytics
+- Incident search
+- Severity filters
+- Investigation previews
+- Responsive desktop and mobile layouts
+
+Administrative actions and real telemetry ingestion are not exposed.
 
 ---
 
 ## 🗺️ Future Improvements
 
-- Containerized deployment
-- Expanded telemetry sources and integrations
+- Docker-based deployment
+- Kubernetes integration
+- Additional telemetry collectors
 - Advanced anomaly detection models
-- Richer AI investigation and correlation
-- Persistent security event monitoring
+- Expanded AI investigation capabilities
 - Multi-user role-based access control
-- Production-ready session and authentication infrastructure
-- Improved reporting and incident analytics
+- Production authentication infrastructure
+- Distributed rate limiting
+- Improved incident reporting
+- Real-time streaming integrations
+- Research-based model evaluation
 
 ---
 
@@ -317,23 +488,19 @@ GitHub: [YasirAli-21](https://github.com/YasirAli-21)
 
 ## 📌 Project Status
 
-**Portfolio MVP — Functional**
+**Functional Portfolio MVP**
 
-NEXUS AI currently includes operational anomaly detection, persistent incident intelligence, AI-assisted investigations, human-controlled remediation simulation, administrator authentication, automated testing, and a GitHub Actions CI pipeline.
+NEXUS AI includes:
 
-The system remains a development and demonstration platform, not a production-ready autonomous remediation system.
-## 📸 Platform Screenshots
+- Hybrid operational anomaly detection
+- Persistent incident management
+- Evidence-based AI investigation
+- Human-controlled remediation simulation
+- Administrator authentication
+- Automated backend and security testing
+- GitHub Actions CI/CD
+- Public read-only recruiter demonstration
 
-### Security Operations Dashboard
-![NEXUS AI Dashboard](docs/screenshots/dashboard.png)
+The project demonstrates AI-assisted operational intelligence while maintaining human control over remediation decisions.
 
-### AI Investigation Center
-![AI Investigation](docs/screenshots/ai-investigation.png)
-
-### Human-Controlled Remediation
-![Remediation Workflow](docs/screenshots/remediation.png)
-
-### Administrator Login
-![NEXUS AI Login](docs/screenshots/login.png)
-
----
+It is a development and portfolio platform, not a production-ready autonomous remediation system.
