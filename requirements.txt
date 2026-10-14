@@ -1,0 +1,26 @@
+
+# NEXUS AI - Python Dependencies
+# Python 3.10
+
+# Backend and REST API
+fastapi==0.141.1
+uvicorn==0.53.0
+SQLAlchemy==2.0.54
+pydantic==2.13.5
+python-dotenv==1.2.3
+
+# Authentication
+itsdangerous==2.2.0
+
+# Machine Learning and Data Processing
+numpy==2.2.6
+pandas==2.3.3
+scikit-learn==1.7.2
+scipy==1.15.3
+joblib==1.6.0
+
+# HTTP and Integration Testing
+httpx==0.28.1
+
+# Optional LLM Investigation
+openai==3.16.2

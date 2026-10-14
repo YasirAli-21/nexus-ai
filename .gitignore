@@ -1,0 +1,26 @@
+.venv/
+.env
+__pycache__/
+*.pyc
+data/synthetic/
+
+# Local backups
+backups/
+
+# Local database and backup protection
+data/database/
+backups/
+*.db
+*.sqlite
+*.sqlite3
+
+# Allow only the four synthetic test datasets
+!data/synthetic/
+data/synthetic/*
+!data/synthetic/normal_metrics.csv
+!data/synthetic/incident_db_failure.csv
+!data/synthetic/normal_logs.csv
+!data/synthetic/incident_logs.csv
+
+frontend/node_modules/
+frontend/dist/

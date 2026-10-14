@@ -1,0 +1,79 @@
+
+name: NEXUS AI CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  backend-tests:
+    name: Python Backend & Security Tests
+    runs-on: ubuntu-latest
+
+    env:
+      NEXUS_AUTH_ENABLED: "true"
+      NEXUS_ADMIN_PASSWORD: "CI-Test-Password-Only-123456"
+      NEXUS_SESSION_SECRET: "CI-Only-Session-Secret-Not-For-Production-123456789"
+      NEXUS_COOKIE_SECURE: "false"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+          python -m pip check
+
+      - name: Verify test datasets
+        run: |
+          test -f data/synthetic/normal_metrics.csv
+          test -f data/synthetic/incident_db_failure.csv
+          test -f data/synthetic/normal_logs.csv
+          test -f data/synthetic/incident_logs.csv
+
+      - name: Run integration tests
+        run: |
+          python -m unittest discover -s tests -p "test_api_integration.py" -v
+
+      - name: Run authentication security tests
+        run: |
+          python -m unittest discover -s tests -p "test_auth_security.py" -v
+
+  frontend-build:
+    name: React Production Build
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: frontend
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Build React dashboard
+        run: npm run build
